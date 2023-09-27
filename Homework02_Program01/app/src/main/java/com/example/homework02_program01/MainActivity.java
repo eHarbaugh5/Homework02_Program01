@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     SeekBar sb_j_blueBar;
     Button btn_j_saveColor;
     ListView lv_j_listOfColors;
-    ArrayList<Color> listOfColors;
+    ArrayList<ColorInfo> listOfColors;
     ColorListAdapter adapter;
 
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         btn_j_saveColor = findViewById(R.id.btn_v_saveColor);
         lv_j_listOfColors = findViewById(R.id.lv_v_listOfColors);
 
-        listOfColors = new ArrayList<Color>();
+        listOfColors = new ArrayList<ColorInfo>();
 
         updateSeekBarHandler();
         buttonClickEventHandler();
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void addColor()
     {
-        Color newColor = new Color(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress());
+        ColorInfo newColor = new ColorInfo(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress());
         listOfColors.add(newColor);
 
     }

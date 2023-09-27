@@ -16,10 +16,10 @@ public class ColorListAdapter extends BaseAdapter
 {
 
     Context context;
-    ArrayList<Color> listOfColors;
+    ArrayList<ColorInfo> listOfColors;
 
 
-    public ColorListAdapter(Context c, ArrayList<Color> ls)
+    public ColorListAdapter(Context c, ArrayList<ColorInfo> ls)
     {
         context = c;
         listOfColors = ls;
@@ -57,11 +57,13 @@ public class ColorListAdapter extends BaseAdapter
         TextView green = view.findViewById(R.id.tv_v_c_green);
         TextView blue = view.findViewById(R.id.tv_v_c_blue);
 
-        Color color = listOfColors.get(i);
+        ColorInfo color = listOfColors.get(i);
 
 
         red.setText("Red: " + color.getRed());
+
         green.setText("Green: " + color.getGreen());
+
         blue.setText("Blue: " + color.getBlue());
 
 

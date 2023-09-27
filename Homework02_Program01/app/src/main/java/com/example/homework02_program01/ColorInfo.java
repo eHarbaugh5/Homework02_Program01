@@ -1,18 +1,18 @@
 package com.example.homework02_program01;
 
-public class Color
+public class ColorInfo
 {
 
     private int red;
     private int green;
     private int blue;
 
-    public Color()
+    public ColorInfo()
     {
 
     }
 
-    public Color(int r, int g, int b)
+    public ColorInfo(int r, int g, int b)
     {
         red = r;
         green = g;
