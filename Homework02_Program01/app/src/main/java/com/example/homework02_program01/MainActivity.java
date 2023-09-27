@@ -3,10 +3,22 @@ package com.example.homework02_program01;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    TextView tv_j_red;
+    TextView tv_j_green;
+    TextView tv_j_blue;
+    SeekBar sb_j_redBar;
+    SeekBar sb_j_greenBar;
+    SeekBar sb_j_blueBar;
+    Button btn_j_saveColor;
+
 
 
 
@@ -14,6 +26,64 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        tv_j_red = findViewById(R.id.tv_v_red);
+        tv_j_green = findViewById(R.id.tv_v_green);
+        tv_j_blue = findViewById(R.id.tv_v_blue);
+
+        sb_j_redBar = findViewById(R.id.sb_v_redBar);
+        sb_j_greenBar = findViewById(R.id.sb_v_greenBar);
+        sb_j_blueBar = findViewById(R.id.sb_v_blueBar);
+
+        btn_j_saveColor = findViewById(R.id.btn_v_saveColor);
+
+        updateSeekBarHandler();
+        buttonClickEventHandler();
+
     }
+
+    public void buttonClickEventHandler()
+    {
+
+        btn_j_saveColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+
+                //Log.d("Button Clicked", sb_j_redBar.getProgress() + "");
+
+            }
+        });
+
+    }
+
+    public void updateSeekBarHandler()
+    {
+
+        sb_j_redBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b)
+            {
+
+                //Log.d("SeekBar Changed", sb_j_redBar.getProgress() + "");
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
+    }
+
+    //  Bottom
+
 }
 
