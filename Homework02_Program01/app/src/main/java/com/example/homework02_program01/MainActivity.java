@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
     SeekBar sb_j_greenBar;
     SeekBar sb_j_blueBar;
     Button btn_j_saveColor;
+    ListView lv_j_listOfColors;
+    ArrayList<Color> listOfColors;
+    ColorListAdapter adapter;
 
 
 
@@ -36,9 +42,20 @@ public class MainActivity extends AppCompatActivity {
         sb_j_blueBar = findViewById(R.id.sb_v_blueBar);
 
         btn_j_saveColor = findViewById(R.id.btn_v_saveColor);
+        lv_j_listOfColors = findViewById(R.id.lv_v_listOfColors);
+
+        listOfColors = new ArrayList<Color>();
 
         updateSeekBarHandler();
         buttonClickEventHandler();
+        fillListView();
+
+    }
+
+    public void addColor()
+    {
+        Color newColor = new Color(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress());
+        listOfColors.add(newColor);
 
     }
 
@@ -50,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view)
             {
 
-                //Log.d("Button Clicked", sb_j_redBar.getProgress() + "");
+                addColor();
+                adapter.notifyDataSetChanged();
 
             }
         });
@@ -66,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
             {
 
                 //Log.d("SeekBar Changed", sb_j_redBar.getProgress() + "");
+                //  update background color
+
 
             }
 
@@ -79,6 +99,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+    }
+
+    public void fillListView()
+    {
+
+        adapter = new ColorListAdapter(this, listOfColors);
+        lv_j_listOfColors.setAdapter(adapter);
+
 
 
     }
