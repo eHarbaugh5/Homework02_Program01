@@ -1,9 +1,9 @@
 package com.example.homework02_program01;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewPropertyAnimatorListenerAdapter;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tv_j_red;
     TextView tv_j_green;
     TextView tv_j_blue;
+    TextView tv_j_hex;
     SeekBar sb_j_redBar;
     SeekBar sb_j_greenBar;
     SeekBar sb_j_blueBar;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lv_j_listOfColors;
     ArrayList<ColorInfo> listOfColors;
     ColorListAdapter adapter;
+
 
 
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         tv_j_red = findViewById(R.id.tv_v_red);
         tv_j_green = findViewById(R.id.tv_v_green);
         tv_j_blue = findViewById(R.id.tv_v_blue);
+        tv_j_hex = findViewById(R.id.tv_v_hexRepresentation);
 
         sb_j_redBar = findViewById(R.id.sb_v_redBar);
         sb_j_greenBar = findViewById(R.id.sb_v_greenBar);
@@ -46,15 +49,19 @@ public class MainActivity extends AppCompatActivity {
 
         listOfColors = new ArrayList<ColorInfo>();
 
+
         updateSeekBarHandler();
         buttonClickEventHandler();
         fillListView();
+
+
 
     }
 
     public void addColor()
     {
-        ColorInfo newColor = new ColorInfo(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress());
+        String newHex = convertToHex(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress());
+        ColorInfo newColor = new ColorInfo(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress(), newHex);
         listOfColors.add(newColor);
 
     }
@@ -77,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateSeekBarHandler()
     {
-
+        //  update when red seek bar moves
         sb_j_redBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b)
@@ -86,7 +93,46 @@ public class MainActivity extends AppCompatActivity {
                 //Log.d("SeekBar Changed", sb_j_redBar.getProgress() + "");
                 //  update background color
 
+                //  update hex code
+                tv_j_hex.setText("Hex Representation: " + convertToHex(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress()));
 
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        sb_j_greenBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b)
+            {
+                tv_j_hex.setText("Hex Representation: " + convertToHex(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress()));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        sb_j_blueBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b)
+            {
+                tv_j_hex.setText("Hex Representation: " + convertToHex(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress()));
             }
 
             @Override
@@ -108,8 +154,73 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new ColorListAdapter(this, listOfColors);
         lv_j_listOfColors.setAdapter(adapter);
+        
+    }
 
+    public String convertToHex(int r, int g, int b)
+    {
 
+        double rgbToHex;
+        char hexDigit;
+        String hex = "";
+
+        rgbToHex = r;
+
+        hexDigit = (char)((int) rgbToHex / 16);
+        if (hexDigit > 9)
+        {
+            hexDigit += 7;
+        }
+        hexDigit += 48;
+        hex = hex + hexDigit;
+
+        rgbToHex = ((rgbToHex / 16) - (int) rgbToHex / 16) * 16;
+        hexDigit = (char)rgbToHex;
+        if (hexDigit > 9)
+        {
+            hexDigit += 7;
+        }
+        hexDigit += 48;
+        hex = hex + hexDigit;
+
+        rgbToHex = g;
+
+        hexDigit = (char)((int) rgbToHex / 16);
+        if (hexDigit > 9)
+        {
+            hexDigit += 7;
+        }
+        hexDigit += 48;
+        hex = hex + hexDigit;
+
+        rgbToHex = ((rgbToHex / 16) - (int) rgbToHex / 16) * 16;
+        hexDigit = (char)rgbToHex;
+        if (hexDigit > 9)
+        {
+            hexDigit += 7;
+        }
+        hexDigit += 48;
+        hex = hex + hexDigit;
+
+        rgbToHex = b;
+
+        hexDigit = (char)((int) rgbToHex / 16);
+        if (hexDigit > 9)
+        {
+            hexDigit += 7;
+        }
+        hexDigit += 48;
+        hex = hex + hexDigit;
+
+        rgbToHex = ((rgbToHex / 16) - (int) rgbToHex / 16) * 16;
+        hexDigit = (char)rgbToHex;
+        if (hexDigit > 9)
+        {
+            hexDigit += 7;
+        }
+        hexDigit += 48;
+        hex = hex + hexDigit;
+        return hex;
 
     }
 

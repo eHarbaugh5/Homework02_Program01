@@ -1,23 +1,30 @@
 package com.example.homework02_program01;
 
+import android.util.Log;
+
 public class ColorInfo
 {
 
     private int red;
     private int green;
     private int blue;
+    private String hex = "";
+    private double rgbToHex;
+    private char hexDigit;
 
     public ColorInfo()
     {
 
     }
 
-    public ColorInfo(int r, int g, int b)
+    public ColorInfo(int r, int g, int b, String h)
     {
         red = r;
         green = g;
         blue = b;
+        hex = h;
     }
+
 
     public int getRed() {
         return red;
@@ -43,6 +50,10 @@ public class ColorInfo
         blue = b;
     }
 
+    public String getHex()
+    {
+        return hex;
+    }
 
 
 }

@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/tv_v_c_red"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="28dp"
@@ -28,9 +28,9 @@
 
     <TextView
         android:id="@+id/tv_v_c_blue"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="28dp"
         android:text="Blue: 255"
         app:layout_constraintStart_toEndOf="@+id/tv_v_c_green"
@@ -38,9 +38,9 @@
 
     <TextView
         android:id="@+id/tv_v_c_green"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="28dp"
         android:text="Green: 255"
         app:layout_constraintStart_toEndOf="@+id/tv_v_c_red"
