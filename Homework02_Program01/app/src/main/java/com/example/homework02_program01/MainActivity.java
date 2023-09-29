@@ -3,6 +3,7 @@ package com.example.homework02_program01;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewPropertyAnimatorListenerAdapter;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ColorInfo> listOfColors;
     ColorListAdapter adapter;
 
+    View v_v_view;
+
+
+
 
 
 
@@ -47,12 +52,15 @@ public class MainActivity extends AppCompatActivity {
         btn_j_saveColor = findViewById(R.id.btn_v_saveColor);
         lv_j_listOfColors = findViewById(R.id.lv_v_listOfColors);
 
+        v_v_view = findViewById(R.id.v_v_view);
+
         listOfColors = new ArrayList<ColorInfo>();
 
 
         updateSeekBarHandler();
         buttonClickEventHandler();
         fillListView();
+
 
 
 
@@ -89,14 +97,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b)
             {
-
-                //Log.d("SeekBar Changed", sb_j_redBar.getProgress() + "");
-                //  update background color
-
-                //  update hex code
-                tv_j_hex.setText("Hex Representation: " + convertToHex(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress()));
-
-
+                //  changes background and the hex representation
+                updateBackgroundAndHex();
             }
 
             @Override
@@ -114,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b)
             {
-                tv_j_hex.setText("Hex Representation: " + convertToHex(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress()));
+               updateBackgroundAndHex();
             }
 
             @Override
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b)
             {
-                tv_j_hex.setText("Hex Representation: " + convertToHex(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress()));
+                updateBackgroundAndHex();
             }
 
             @Override
@@ -224,6 +226,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void updateBackgroundAndHex()
+    {
+
+        v_v_view.setBackgroundColor(Color.rgb(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress()));
+        tv_j_hex.setText("Hex Representation: " + convertToHex(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress()));
+
+    }
     //  Bottom
 
 }
