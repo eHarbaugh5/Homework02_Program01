@@ -5,7 +5,9 @@ import androidx.core.view.ViewPropertyAnimatorListenerAdapter;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
 
     TextView tv_j_red;
     TextView tv_j_green;
@@ -26,13 +29,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lv_j_listOfColors;
     ArrayList<ColorInfo> listOfColors;
     ColorListAdapter adapter;
-
     View v_v_view;
-
-
-
-
-
 
 
     @Override
@@ -40,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //  make connections
         tv_j_red = findViewById(R.id.tv_v_red);
         tv_j_green = findViewById(R.id.tv_v_green);
         tv_j_blue = findViewById(R.id.tv_v_blue);
@@ -54,18 +52,21 @@ public class MainActivity extends AppCompatActivity {
 
         v_v_view = findViewById(R.id.v_v_view);
 
+        //  dynamic color storage
         listOfColors = new ArrayList<ColorInfo>();
 
+        //  call all functions as necessary
 
+        //  giving this 255x3 starts the program on the color white
+        updateBackgroundAndHex(255, 255, 255);
         updateSeekBarHandler();
         buttonClickEventHandler();
+        listViewClickEventHandler();
         fillListView();
-
-
-
 
     }
 
+    //  creates a new Color and adds it to the listOfColors
     public void addColor()
     {
         String newHex = convertToHex(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress());
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //  calls addColor, notifies the adapter of changes, and resets to white
     public void buttonClickEventHandler()
     {
 
@@ -84,12 +86,29 @@ public class MainActivity extends AppCompatActivity {
 
                 addColor();
                 adapter.notifyDataSetChanged();
+                updateBackgroundAndHex(255,255,255);
 
             }
         });
 
     }
 
+    //  get the values from listOfColors at the list views i, and updates to that color
+    public void listViewClickEventHandler()
+    {
+
+        lv_j_listOfColors.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                updateBackgroundAndHex(listOfColors.get(i).getRed(), listOfColors.get(i).getGreen(), listOfColors.get(i).getBlue());
+            }
+        });
+
+
+    }
+
+    //  for all 3 seekbars, just updates based on each seekbars progress
     public void updateSeekBarHandler()
     {
         //  update when red seek bar moves
@@ -98,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b)
             {
                 //  changes background and the hex representation
-                updateBackgroundAndHex();
+                updateBackgroundAndHex(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress());
             }
 
             @Override
@@ -116,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b)
             {
-               updateBackgroundAndHex();
+               updateBackgroundAndHex(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress());
             }
 
             @Override
@@ -134,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b)
             {
-                updateBackgroundAndHex();
+                updateBackgroundAndHex(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress());
             }
 
             @Override
@@ -159,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
         
     }
 
+    //  converts rgb to hex and returns the hex in a string
     public String convertToHex(int r, int g, int b)
     {
 
@@ -226,11 +246,35 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void updateBackgroundAndHex()
+    //  this takes rgb and updates: seekbar progress, background color, text values, and black or white text
+    public void updateBackgroundAndHex(int r, int g, int b)
     {
 
-        v_v_view.setBackgroundColor(Color.rgb(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress()));
-        tv_j_hex.setText("Hex Representation: " + convertToHex(sb_j_redBar.getProgress(), sb_j_greenBar.getProgress(), sb_j_blueBar.getProgress()));
+        tv_j_red.setText("Red: " + r);
+        tv_j_green.setText("Green: " + g);
+        tv_j_blue.setText("Blue: " + b);
+        sb_j_redBar.setProgress(r);
+        sb_j_greenBar.setProgress(g);
+        sb_j_blueBar.setProgress(b);
+
+        v_v_view.setBackgroundColor(Color.rgb(r, g, b));
+        tv_j_hex.setText("Hex Representation: " + convertToHex(r, g, b));
+
+        if (r + g + b <=225)
+        {
+            tv_j_red.setTextColor(Color.rgb(255, 255, 255));
+            tv_j_green.setTextColor(Color.rgb(255, 255, 255));
+            tv_j_blue.setTextColor(Color.rgb(255, 255, 255));
+            tv_j_hex.setTextColor(Color.rgb(255, 255, 255));
+        }
+        else if (r + g + b > 225)
+        {
+            tv_j_red.setTextColor(Color.rgb(0,0,0));
+            tv_j_green.setTextColor(Color.rgb(0,0,0));
+            tv_j_blue.setTextColor(Color.rgb(0,0,0));
+            tv_j_hex.setTextColor(Color.rgb(0,0,0));
+
+        }
 
     }
     //  Bottom

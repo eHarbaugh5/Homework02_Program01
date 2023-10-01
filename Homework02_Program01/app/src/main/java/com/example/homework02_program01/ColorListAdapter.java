@@ -84,8 +84,6 @@ public class ColorListAdapter extends BaseAdapter
             hex.setTextColor(Color.rgb(0,0,0));
         }
 
-
-
         //  return
         return view;
     }
